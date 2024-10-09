@@ -9,6 +9,7 @@ namespace Jobs.Models
         [Required]
         public int Id { get; set; }
         public int EmployeeId {  get; set; }
+        public bool IsDeleted { get; set; }
         public List<Employee> Employees { get; set; }
         public string JobName {  get; set; }
         public string Direction {  get; set; }
