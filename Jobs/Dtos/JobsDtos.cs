@@ -4,6 +4,7 @@ namespace Jobs.Dtos
 {
     public class JobsDtos
     {
+        public int Id { get; set; }
         public int EmployeeId { get; set; }
         public bool IsDeleted { get; set; }
         public List<Employee> Employees { get; set; }

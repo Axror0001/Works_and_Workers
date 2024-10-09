@@ -23,6 +23,7 @@ namespace Jobs.Repository
                 }
                 else
                 {
+                    employee.DateTime = DateTime.Now;
                     await _dbContext.Employees.AddAsync(employee, cancellationToken);
                     await _dbContext.SaveChangesAsync();
                     return employee;

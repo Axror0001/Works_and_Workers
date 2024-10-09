@@ -5,6 +5,7 @@ namespace Jobs.Dtos
 {
     public class EmployeeDtos
     {
+        public int Id { get; set; }
         public int LevelId { get; set; }
         public int CompanyId { get; set; }
         public string FirstName { get; set; }

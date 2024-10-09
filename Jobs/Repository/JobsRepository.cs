@@ -91,7 +91,7 @@ namespace Jobs.Repository
                 }
                 else
                 {
-                    return result;
+                    return result.ToList();
                 }
             }
             catch (Exception ex)
