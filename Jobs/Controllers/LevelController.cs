@@ -26,8 +26,8 @@ namespace Jobs.Controllers
             var result = await _levelService.GetByIdAsync(Id, cancellationToken);
             return Ok(result);
         }
-        [HttpGet("{levelId}")]
-        public async Task<IActionResult> GetAllEmployeeByLevelId([FromRoute]int Id, CancellationToken cancellationToken = default)
+        [HttpGet]
+        public async Task<IActionResult> GetAllEmployeeByLevelId(int Id, CancellationToken cancellationToken = default)
         {
             var result = await _levelService.GetAllEmployeeByLevelId(Id, cancellationToken);
             return Ok(result);

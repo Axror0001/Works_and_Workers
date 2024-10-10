@@ -69,6 +69,7 @@ namespace Jobs.Service
                 if (JobsDtos is not null)
                 {
                     var jobModel = JobsDtos.ModelToDtos();
+                    jobModel.Id = JobsDtos.Id;
                     jobModel.JobName = JobsDtos.JobName.Trim();
                     jobModel.CompanyBrand = JobsDtos.CompanyBrand.Trim();
                     jobModel.Direction = JobsDtos.Direction.Trim();
@@ -95,6 +96,7 @@ namespace Jobs.Service
                 var result = await _jobRepository.GetByIdJobs(JobsDtos.Id, cancellationToken);
                 if (result != null && JobsDtos != null)
                 {
+                    result.Id = JobsDtos.Id;
                     result.JobName = JobsDtos.JobName.Trim();
                     result.CompanyBrand = JobsDtos.CompanyBrand.Trim();
                     result.Direction = JobsDtos.Direction.Trim();

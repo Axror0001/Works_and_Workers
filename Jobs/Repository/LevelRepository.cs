@@ -1,6 +1,7 @@
 ﻿using Jobs.Data;
 using Jobs.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 
 namespace Jobs.Repository
 {
@@ -63,16 +64,15 @@ namespace Jobs.Repository
         {
             try
             {
-                var result = await _dbContext.Employees.Where(x => !x.IsDelete && x.LevelId.Equals(Id)).ToListAsync(cancellationToken);
-                if (result is not null)
+                var result = await _dbContext.Employees.Where(x => x.LevelId == Id && !x.IsDelete).ToListAsync(cancellationToken);
+                if (result is null)
                 {
-                    return result;
+                    throw new Exception("Not Found Employee");
                 }
                 else
                 {
-                    throw new Exception("Not Found");
+                    return result.ToList();
                 }
-                
             }
             catch (Exception ex)
             {

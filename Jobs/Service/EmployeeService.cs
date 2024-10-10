@@ -8,9 +8,11 @@ namespace Jobs.Service
     public class EmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
-        public EmployeeService(IEmployeeRepository employeeRepository)
+        private readonly ILevelRepository _levelRepository;
+        public EmployeeService(IEmployeeRepository employeeRepository, ILevelRepository levelRepository)
         {
             this._employeeRepository = employeeRepository;
+            this._levelRepository = levelRepository;
         }
         public async Task<List<EmployeeDtos>> GetAllAsync(CancellationToken cancellationToken = default)
         {
@@ -75,9 +77,12 @@ namespace Jobs.Service
         {
             try
             {
+                var result = await _levelRepository.GetByIdLevels(employeeDtos.LevelId, cancellationToken);
+                employeeDtos.Level = result.Levels;
                 if(employeeDtos is not null)
                 {
                     var employeeModel = employeeDtos.ModelToDto();
+                    employeeModel.Id = employeeDtos.Id;
                     employeeModel.FirstName = employeeDtos.FirstName.Trim();
                     employeeModel.Address = employeeDtos.Address.Trim();
                     employeeModel.LastName = employeeDtos.LastName.Trim();
@@ -109,6 +114,7 @@ namespace Jobs.Service
                 if(employeeDtos != null && result is not null)
                 {
                     var employee = employeeDtos.ModelToDto();
+                    employee.Id = employeeDtos.Id;
                     employee.FirstName = employeeDtos.FirstName.Trim();
                     employee.Address = employeeDtos.Address.Trim();
                     employee.LastName = employeeDtos.LastName.Trim();

@@ -65,6 +65,7 @@ namespace Jobs.Service
                 if (LevelsDtos is not null)
                 {
                     var levelModel = LevelsDtos.ModelToDtos();
+                    levelModel.Id = LevelsDtos.Id;
                     levelModel.Code = LevelsDtos.Code.Trim();
                     levelModel.Levels = LevelsDtos.Levels.Trim();
                     levelModel.IsDeleted = false;
@@ -90,6 +91,7 @@ namespace Jobs.Service
                 if (result != null && LevelsDtos != null)
                 {
                     var level = LevelsDtos.ModelToDtos();
+                    level.Id = LevelsDtos.Id;
                     level.Levels = LevelsDtos.Levels.Trim();
                     level.IsDeleted = LevelsDtos.IsDeleted;
                     level.Code = LevelsDtos.Code.Trim();

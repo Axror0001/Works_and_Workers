@@ -26,8 +26,8 @@ namespace Jobs.Controllers
             var result = await _jobService.GetByIdAsync(Id, cancellationToken);
             return Ok(result);
         }
-        [HttpGet("{jobId}")]
-        public async Task<IActionResult> GetAllEmployeeByCompanyId([FromRoute] int Id, CancellationToken cancellationToken = default)
+        [HttpGet]
+        public async Task<IActionResult> GetAllEmployeeByCompanyId(int Id, CancellationToken cancellationToken = default)
         {
             var result = await _jobService.GetAllEmployeeByConpanyId(Id, cancellationToken);
             return Ok(result);
