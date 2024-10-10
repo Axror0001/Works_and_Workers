@@ -81,6 +81,24 @@ namespace Jobs.Repository
             }
         }
 
+        /*public async Task<Job> GetByEmployeeIdCompany(int id, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var result = await _dbContext.Jobs.FirstOrDefaultAsync(x => x.Id.Equals(id) && !x.IsDeleted, cancellationToken);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw ex;
+            }
+        }
+
+        public Task<Level> GetByEmployeeIdLevel(int id, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }*/
+
         public async Task<Employee> GetByIdEmployee(int id, CancellationToken cancellationToken = default)
         {
             try

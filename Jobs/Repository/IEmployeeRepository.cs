@@ -9,5 +9,7 @@ namespace Jobs.Repository
         Task<Employee> CreateEmployee(Employee employee, CancellationToken cancellationToken = default);
         Task<Employee> UpdateEmployee(Employee employee, CancellationToken cancellationToken = default);
         Task<bool> DeleteEmployee(int Id, CancellationToken cancellationToken = default);
+        /*Task<Job> GetByEmployeeIdCompany(int id, CancellationToken cancellationToken = default);
+        Task<Level> GetByEmployeeIdLevel(int id, CancellationToken cancellationToken = default);*/
     }
 }

@@ -1,0 +1,48 @@
+﻿@using JobsUI.Service;
+@* <EditForm Model="@PositionDTO" OnValidSubmit="async() => { OnSave();}" OnInvalidSubmit="ShowError">
+    <Validations @ref="_validations" Model="PositionDTO" Mode="ValidationMode.Auto">
+        <Validation Validator="IsValid">
+            <div>
+                <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                    <FieldLabel>@localizer.GetLocalizedValue("code",$"{CultureInfo.CurrentCulture}")<Text TextColor="TextColor.Danger">*</Text></FieldLabel>
+                    <TextEdit MaskType="MaskType.RegEx" EditMask="^.GetLocalizedValue(0-9A-Za-z-]*$" MaxLength="10" @bind-Text="@PositionDTO.Code">
+                        <Feedback>
+                            <ValidationError>@localizer.GetLocalizedValue($"{errorMessage}",$"{CultureInfo.CurrentCulture}")</ValidationError>
+                        </Feedback>
+                    </TextEdit>
+                </Field>
+            </div>
+        </Validation>
+    </Validations>
+    <br />
+    <FluentValidationValidator DisableAssemblyScanning="@true" @ref=Validator />
+    <div class="form-group">
+        <FTranslation @ref=translation IsOnDrawer=true Disabled=false Translations="@PositionDTO.Translations"></FTranslation>
+    </div>
+    <br />
+    <Field Flex="Flex.JustifyContent.End">
+        <Div class="pb-2 d-flex float-right" style="margin-top: 30px">
+            <Button Class="w-100 me-2" Color="Color.Secondary" Outline Clicked="() => Refresh()">
+                @localizer.GetLocalizedValue("cancel",$"{CultureInfo.CurrentCulture}")
+            </Button>
+            <Button Class="me-0" Disabled=_disabledSaveBtn Type="ButtonType.Submit" Color="Color.Primary">
+                @localizer.GetLocalizedValue("create",$"{CultureInfo.CurrentCulture}")
+            </Button>
+        </Div>
+    </Field>
+</EditForm> *@
+@code {
+    [Parameter]
+    public Func<Dtos.EmployeeDtos, Task> SaveAction{ get; set; }
+    // public async Task OnSave()
+    // {
+    //     try
+    //     {
+    //         var result = await _
+    //     }
+    //     catch(Exception ex)
+    //     {
+    //         throw new Exception("Sorry Don`t Save Employee")
+    //     }
+    // }
+}
