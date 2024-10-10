@@ -1,4 +1,6 @@
 using Jobs.Data;
+using Jobs.Repository;
+using Jobs.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaulConnection")));
+builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddTransient<IJobRepository, JobsRepository>();
+builder.Services.AddTransient<ILevelRepository, LevelRepository>();
+builder.Services.AddTransient<EmployeeService>();
+builder.Services.AddTransient<JobService>();
+builder.Services.AddTransient<LevelService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

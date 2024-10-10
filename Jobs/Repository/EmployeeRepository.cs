@@ -107,7 +107,7 @@ namespace Jobs.Repository
         {
             try
             {
-                var result = await _dbContext.Employees.FirstOrDefaultAsync(x => x.IsDelete.Equals(false) && x.Id.Equals(employee.Id) && x.Levels.Equals(employee.Level), cancellationToken);
+                var result = await _dbContext.Employees.FirstOrDefaultAsync(x => x.IsDelete.Equals(false) && x.Id.Equals(employee.Id), cancellationToken);
                 if(result is not null)
                 {
 

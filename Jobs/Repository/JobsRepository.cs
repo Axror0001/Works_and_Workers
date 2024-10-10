@@ -23,6 +23,7 @@ namespace Jobs.Repository
                 }
                 else
                 {
+                    jobs.IsDeleted = false;
                     await _dbContext.Jobs.AddAsync(jobs, cancellationToken);
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     return jobs;
@@ -138,7 +139,6 @@ namespace Jobs.Repository
                     result.Direction = jobs.Direction;
                     result.CompanyBrand = jobs.CompanyBrand;
                     result.IsDeleted = false;
-                    result.EmployeeId = jobs.EmployeeId;
                     await _dbContext.Jobs.AddAsync(jobs, cancellationToken);
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     return result;

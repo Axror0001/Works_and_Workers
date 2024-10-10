@@ -5,7 +5,7 @@ namespace Jobs.Dtos
 {
     public class EmployeeDtos
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public int? LevelId { get; set; }
         public int? CompanyId { get; set; }
         public string FirstName { get; set; }
@@ -17,7 +17,5 @@ namespace Jobs.Dtos
         public int PhoneNumber { get; set; }
         public bool IsDelete { get; set; }
         public DateTime DateTime { get; set; }
-        public Job? Jobs { get; set; }
-        public Level? Levels { get; set; }
     }
 }

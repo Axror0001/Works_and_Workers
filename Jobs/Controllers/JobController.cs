@@ -26,10 +26,10 @@ namespace Jobs.Controllers
             var result = await _jobService.GetByIdAsync(Id, cancellationToken);
             return Ok(result);
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAllEmployeeByCompanyId([FromBody] JobsDtos jobsDtos, CancellationToken cancellationToken = default)
+        [HttpGet("{jobId}")]
+        public async Task<IActionResult> GetAllEmployeeByCompanyId([FromRoute] int Id, CancellationToken cancellationToken = default)
         {
-            var result = await _jobService.GetAllEmployeeByConpanyId(jobsDtos, cancellationToken);
+            var result = await _jobService.GetAllEmployeeByConpanyId(Id, cancellationToken);
             return Ok(result);
         }
         [HttpPost]
@@ -45,7 +45,7 @@ namespace Jobs.Controllers
             return Ok(result);
         }
         [HttpDelete]
-        public async Task<IActionResult> DeleteJob([FromBody]JobsDtos jobsDtos, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> DeleteJob([FromBody] JobsDtos jobsDtos, CancellationToken cancellationToken = default)
         {
             var result = await _jobService.DeleteAsync(jobsDtos, cancellationToken);
             return Ok(result);

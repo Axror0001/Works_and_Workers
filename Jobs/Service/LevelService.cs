@@ -19,7 +19,6 @@ namespace Jobs.Service
                 var result = await _levelRepository.GetAllLevels(cancellationToken);
                 return result.Select(x => new LevelsDtos()
                 {
-                    EmployeeId = x.EmployeeId,
                     Code = x.Code,
                     Levels = x.Levels,
                     IsDeleted = x.IsDeleted,
@@ -44,7 +43,6 @@ namespace Jobs.Service
                 {
                     var employeeDto = new LevelsDtos()
                     {
-                        EmployeeId = result.EmployeeId,
                         Code = result.Code,
                         Levels = result.Levels,
                         IsDeleted = result.IsDeleted,
@@ -62,13 +60,12 @@ namespace Jobs.Service
         {
             try
             {
-                var result = await _levelRepository.GetByIdLevels(LevelsDtos.Id, cancellationToken);
-                if (LevelsDtos is not null && result is not null)
+                if (LevelsDtos is not null)
                 {
                     var levelModel = LevelsDtos.ModelToDtos();
                     levelModel.Code = LevelsDtos.Code.Trim();
                     levelModel.Levels = LevelsDtos.Levels.Trim();
-                    levelModel.IsDeleted = result.IsDeleted = default;
+                    levelModel.IsDeleted = false;
                     await _levelRepository.CreateLevels(levelModel, cancellationToken);
                     return LevelsDtos;
                 }
@@ -130,14 +127,14 @@ namespace Jobs.Service
                 throw ex;
             }
         }
-        public async Task<IEnumerable<Employee>> GetAllEmployeeByLevelId(LevelsDtos LevelsDtos, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Employee>> GetAllEmployeeByLevelId(int Id, CancellationToken cancellationToken = default)
         {
             try
             {
-                var result = await _levelRepository.GetByIdLevels(LevelsDtos.Id, cancellationToken);
-                if (LevelsDtos != null && result != null)
+                var result = await _levelRepository.GetByIdLevels(Id, cancellationToken);
+                if (Id != null && result != null)
                 {
-                    var employee = await _levelRepository.GetAllEmployees(LevelsDtos.Id, cancellationToken);
+                    var employee = await _levelRepository.GetAllEmployees(Id, cancellationToken);
                     if (employee != null)
                     {
                         return employee;

@@ -22,6 +22,7 @@ namespace Jobs.Repository
                 }
                 else
                 {
+                    level.IsDeleted = false;
                     await _dbContext.Levels.AddAsync(level, cancellationToken);
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     return result;
@@ -132,7 +133,6 @@ namespace Jobs.Repository
                 {
                     result.Code = level.Code;
                     result.Levels = level.Levels;
-                    result.EmployeeId = level.EmployeeId;
                     await _dbContext.Levels.AddAsync(result, cancellationToken);
                     await _dbContext.SaveChangesAsync();
                     return result;

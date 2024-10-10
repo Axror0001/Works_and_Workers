@@ -73,8 +73,7 @@ namespace Jobs.Service
         {
             try
             {
-                var result = await _employeeRepository.GetByIdEmployee(employeeDtos.Id, cancellationToken);
-                if(employeeDtos is not null && result is not null)
+                if(employeeDtos is not null)
                 {
                     var employeeModel = employeeDtos.ModelToDto();
                     employeeModel.FirstName = employeeDtos.FirstName.Trim();
@@ -104,8 +103,7 @@ namespace Jobs.Service
         {
             try
             {
-                var result = await _employeeRepository.GetByIdEmployee(employeeDtos.Id, cancellationToken);
-                if(result != null && employeeDtos != null)
+                if(employeeDtos != null)
                 {
                     var employee = employeeDtos.ModelToDto();
                     employee.FirstName = employeeDtos.FirstName.Trim();
@@ -117,7 +115,7 @@ namespace Jobs.Service
                     employee.Age = employeeDtos.Age.Trim();
                     employee.PhoneNumber = employeeDtos.PhoneNumber;
                     employee.IsDelete = employeeDtos.IsDelete = default;
-                    await _employeeRepository.UpdateEmployee(result, cancellationToken);
+                    await _employeeRepository.UpdateEmployee(employee, cancellationToken);
                     return employeeDtos;
                 }
                 else
@@ -135,10 +133,9 @@ namespace Jobs.Service
         {
             try
             {
-                var result = await _employeeRepository.GetByIdEmployee(employeeDtos.Id, cancellationToken);
-                if(employeeDtos != null && result != null)
+                if(employeeDtos != null)
                 {
-                    await _employeeRepository.DeleteEmployee(result.Id, cancellationToken);
+                    await _employeeRepository.DeleteEmployee(employeeDtos.Id, cancellationToken);
                     return true;
                 }
                 else

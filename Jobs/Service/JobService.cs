@@ -19,7 +19,6 @@ namespace Jobs.Service
                 var result = await _jobRepository.GetAllJobs(cancellationToken);
                 return result.Select(x => new JobsDtos()
                 {
-                    EmployeeId = x.EmployeeId,
                     CompanyBrand = x.CompanyBrand,
                     CompanyName = x.CompanyName,
                     Direction = x.Direction,
@@ -46,7 +45,6 @@ namespace Jobs.Service
                 {
                     var employeeDto = new JobsDtos()
                     {
-                        EmployeeId = result.EmployeeId,
                         CompanyName = result.CompanyName,
                         CompanyBrand = result.CompanyBrand,
                         Direction = result.Direction,
@@ -66,8 +64,7 @@ namespace Jobs.Service
         {
             try
             {
-                var result = await _jobRepository.GetByIdJobs(JobsDtos.Id, cancellationToken);
-                if (JobsDtos is not null && result is not null)
+                if (JobsDtos is not null)
                 {
                     var jobModel = JobsDtos.ModelToDtos();
                     jobModel.JobName = JobsDtos.JobName.Trim();
@@ -75,7 +72,6 @@ namespace Jobs.Service
                     jobModel.Direction = JobsDtos.Direction.Trim();
                     jobModel.CompanyName = JobsDtos.CompanyName.Trim();
                     jobModel.IsDeleted = JobsDtos.IsDeleted;
-                    jobModel.EmployeeId = JobsDtos.EmployeeId;
                     await _jobRepository.CreateJobs(jobModel, cancellationToken);
                     return JobsDtos;
                 }
@@ -137,14 +133,14 @@ namespace Jobs.Service
                 throw ex;
             }
         }
-        public async Task<IEnumerable<Employee>> GetAllEmployeeByConpanyId(JobsDtos jobsDtos, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Employee>> GetAllEmployeeByConpanyId(int Id, CancellationToken cancellationToken = default)
         {
             try
             {
-                var result = await _jobRepository.GetByIdJobs(jobsDtos.Id, cancellationToken);
-                if(jobsDtos != null && result != null)
+                var result = await _jobRepository.GetByIdJobs(Id, cancellationToken);
+                if(Id != null && result != null)
                 {
-                   var employee = await _jobRepository.GetByEmployeeCompanyId(jobsDtos.Id, cancellationToken);
+                   var employee = await _jobRepository.GetByEmployeeCompanyId(Id, cancellationToken);
                     if (employee != null)
                     {
                         return employee;

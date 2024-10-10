@@ -19,7 +19,5 @@ namespace Jobs.Models
         public int PhoneNumber {  get; set; }
         public bool IsDelete { get; set; }
         public DateTime DateTime { get; set; }
-        public Job? Jobs { get; set; }
-        public Level? Levels { get; set; }
     }
 }
