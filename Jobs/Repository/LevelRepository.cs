@@ -40,7 +40,7 @@ namespace Jobs.Repository
             try
             {
                 var result = await _dbContext.Levels.FirstOrDefaultAsync(x => x.Id.Equals(Id) && !x.IsDeleted, cancellationToken);
-                if(result is null)
+                if(result is not null)
                 {
                     result.IsDeleted = true;
                      _dbContext.Levels.Update(result);

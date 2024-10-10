@@ -41,16 +41,16 @@ namespace Jobs.Repository
             try
             {
                 var result = await _dbContext.Jobs.FirstOrDefaultAsync(x => x.Id.Equals(Id) && !x.IsDeleted, cancellationToken);    
-                if(result is null)
+                if(result is not null)
                 {
-                    throw new Exception("Not Found this Jobs");
+                    result.IsDeleted = true;
+                    _dbContext.Jobs.Update(result);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                    return true;
                 }
                 else
                 {
-                    result.IsDeleted = true;
-                     _dbContext.Jobs.Update(result);
-                    await _dbContext.SaveChangesAsync(cancellationToken);
-                    return true;
+                    throw new Exception("Not Found this Jobs");
                 }
             }
             catch (Exception ex)

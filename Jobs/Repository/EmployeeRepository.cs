@@ -42,7 +42,7 @@ namespace Jobs.Repository
             try
             {
                 var result = await _dbContext.Employees.FirstOrDefaultAsync(x => !x.IsDelete && x.Id.Equals(Id), cancellationToken);
-                if(result is null)
+                if(result is not null)
                 {
                     result.IsDelete = true;
                      _dbContext.Update(result);
