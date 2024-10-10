@@ -19,6 +19,7 @@ namespace Jobs.Service
                 var result = await _levelRepository.GetAllLevels(cancellationToken);
                 return result.Select(x => new LevelsDtos()
                 {
+                    Id = x.Id,
                     Code = x.Code,
                     Levels = x.Levels,
                     IsDeleted = x.IsDeleted,
@@ -43,6 +44,7 @@ namespace Jobs.Service
                 {
                     var employeeDto = new LevelsDtos()
                     {
+                        Id = result.Id,
                         Code = result.Code,
                         Levels = result.Levels,
                         IsDeleted = result.IsDeleted,
@@ -106,19 +108,19 @@ namespace Jobs.Service
                 throw ex;
             }
         }
-        public async Task<bool> DeleteAsync(LevelsDtos LevelsDtos, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(int Id, CancellationToken cancellationToken = default)
         {
             try
             {
-                var result = await _levelRepository.GetByIdLevels(LevelsDtos.Id, cancellationToken);
-                if (LevelsDtos != null && result != null)
+                var result = await _levelRepository.GetByIdLevels(Id, cancellationToken);
+                if (Id != null && result != null)
                 {
-                    await _levelRepository.DeleteLevels(LevelsDtos.Id, cancellationToken);
+                    await _levelRepository.DeleteLevels(Id, cancellationToken);
                     return true;
                 }
                 else
                 {
-                    throw new Exception($"Not Found {LevelsDtos.Id} Database ");
+                    throw new Exception($"Not Found {Id} Database ");
                 }
             }
             catch (Exception ex)

@@ -44,10 +44,10 @@ namespace Jobs.Controllers
             var result = await _levelService.UpdateAsync(levelsDtos, cancellationToken);
             return Ok(result);
         }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteLevel([FromBody] LevelsDtos levelsDtos, CancellationToken cancellationToken = default)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteLevel([FromRoute] int Id, CancellationToken cancellationToken = default)
         {
-            var result = await _levelService.DeleteAsync(levelsDtos, cancellationToken);
+            var result = await _levelService.DeleteAsync(Id, cancellationToken);
             return Ok(result);
         }
     }

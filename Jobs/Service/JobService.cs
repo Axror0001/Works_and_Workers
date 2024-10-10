@@ -19,6 +19,7 @@ namespace Jobs.Service
                 var result = await _jobRepository.GetAllJobs(cancellationToken);
                 return result.Select(x => new JobsDtos()
                 {
+                    Id = x.Id,
                     CompanyBrand = x.CompanyBrand,
                     CompanyName = x.CompanyName,
                     Direction = x.Direction,
@@ -45,6 +46,7 @@ namespace Jobs.Service
                 {
                     var employeeDto = new JobsDtos()
                     {
+                        Id = result.Id,
                         CompanyName = result.CompanyName,
                         CompanyBrand = result.CompanyBrand,
                         Direction = result.Direction,
@@ -112,19 +114,19 @@ namespace Jobs.Service
                 throw ex;
             }
         }
-        public async Task<bool> DeleteAsync(JobsDtos JobsDtos, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(int Id, CancellationToken cancellationToken = default)
         {
             try
             {
-                var result = await _jobRepository.GetByIdJobs(JobsDtos.Id, cancellationToken);
-                if (JobsDtos != null && result != null)
+                var result = await _jobRepository.GetByIdJobs(Id, cancellationToken);
+                if (Id != null && result != null)
                 {
                     await _jobRepository.DeleteJobs(result.Id, cancellationToken);
                     return true;
                 }
                 else
                 {
-                    throw new Exception($"Not Found {JobsDtos.Id} Database ");
+                    throw new Exception($"Not Found {Id} Database ");
                 }
             }
             catch (Exception ex)

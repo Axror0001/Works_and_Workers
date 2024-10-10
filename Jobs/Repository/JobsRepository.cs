@@ -41,16 +41,16 @@ namespace Jobs.Repository
             try
             {
                 var result = await _dbContext.Jobs.FirstOrDefaultAsync(x => x.Id.Equals(Id) && !x.IsDeleted, cancellationToken);    
-                if(result is not null)
+                if(result is null)
                 {
                     throw new Exception("Not Found this Jobs");
                 }
                 else
                 {
                     result.IsDeleted = true;
-                    await _dbContext.Jobs.AddAsync(result, cancellationToken);
-                    await _dbContext.SaveChangesAsync();
-                    return result.IsDeleted;
+                     _dbContext.Jobs.Update(result);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                    return true;
                 }
             }
             catch (Exception ex)
@@ -139,7 +139,7 @@ namespace Jobs.Repository
                     result.Direction = jobs.Direction;
                     result.CompanyBrand = jobs.CompanyBrand;
                     result.IsDeleted = false;
-                    await _dbContext.Jobs.AddAsync(jobs, cancellationToken);
+                     _dbContext.Jobs.Update(jobs);
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     return result;
                 }

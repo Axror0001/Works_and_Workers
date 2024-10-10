@@ -19,6 +19,7 @@ namespace Jobs.Service
                 var result = await _employeeRepository.GetAllEmployee(cancellationToken);
                 return result.Select(x => new EmployeeDtos()
                 {
+                    Id = x.Id,
                     Address = x.Address,
                     CompanyId = x.CompanyId,
                     LastName = x.LastName,
@@ -50,6 +51,7 @@ namespace Jobs.Service
                 {
                     var employeeDto = new EmployeeDtos()
                     {
+                        Id = result.Id,
                         CompanyId = result.CompanyId,
                         LastName = result.LastName,
                         Level = result.Level,
@@ -103,7 +105,8 @@ namespace Jobs.Service
         {
             try
             {
-                if(employeeDtos != null)
+                var result = await _employeeRepository.GetByIdEmployee(employeeDtos.Id, cancellationToken);
+                if(employeeDtos != null && result is not null)
                 {
                     var employee = employeeDtos.ModelToDto();
                     employee.FirstName = employeeDtos.FirstName.Trim();
@@ -129,18 +132,18 @@ namespace Jobs.Service
                 throw ex;
             }
         }
-        public async Task<bool> DeleteAsync(EmployeeDtos employeeDtos, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(int Id, CancellationToken cancellationToken = default)
         {
             try
             {
-                if(employeeDtos != null)
+                if(Id != null)
                 {
-                    await _employeeRepository.DeleteEmployee(employeeDtos.Id, cancellationToken);
+                    await _employeeRepository.DeleteEmployee(Id, cancellationToken);
                     return true;
                 }
                 else
                 {
-                    throw new Exception($"Not Found {employeeDtos.Id} Database ");
+                    throw new Exception($"Not Found {Id} Database ");
                 }
             }
             catch (Exception ex)

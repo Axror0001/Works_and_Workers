@@ -40,10 +40,10 @@ namespace Jobs.Repository
             try
             {
                 var result = await _dbContext.Levels.FirstOrDefaultAsync(x => x.Id.Equals(Id) && !x.IsDeleted, cancellationToken);
-                if(result is not null)
+                if(result is null)
                 {
                     result.IsDeleted = true;
-                    await _dbContext.Levels.AddAsync(result, cancellationToken);
+                     _dbContext.Levels.Update(result);
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     return true;
                 }
@@ -133,7 +133,7 @@ namespace Jobs.Repository
                 {
                     result.Code = level.Code;
                     result.Levels = level.Levels;
-                    await _dbContext.Levels.AddAsync(result, cancellationToken);
+                    _dbContext.Levels.Update(result);
                     await _dbContext.SaveChangesAsync();
                     return result;
                 }

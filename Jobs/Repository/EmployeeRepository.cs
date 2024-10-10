@@ -42,10 +42,10 @@ namespace Jobs.Repository
             try
             {
                 var result = await _dbContext.Employees.FirstOrDefaultAsync(x => !x.IsDelete && x.Id.Equals(Id), cancellationToken);
-                if(result is not null)
+                if(result is null)
                 {
                     result.IsDelete = true;
-                    await _dbContext.AddAsync(result, cancellationToken);
+                     _dbContext.Update(result);
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     return true;
                 }
@@ -121,7 +121,7 @@ namespace Jobs.Repository
                     result.PhoneNumber = employee.PhoneNumber;
                     result.DateTime = employee.DateTime;
                     result.IsDelete = employee.IsDelete = false;
-                    await _dbContext.Employees.AddAsync(result);
+                    _dbContext.Update(result);
                     await _dbContext.SaveChangesAsync();
                     return result;
                     

@@ -38,10 +38,10 @@ namespace Jobs.Controllers
             var result = await _employeeService.UpdateAsync(employeeDtos, cancellationToken);
             return Ok(result);
         }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteEmployee([FromBody] EmployeeDtos employeeDtos, CancellationToken cancellationToken = default)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteEmployee([FromRoute] int Id, CancellationToken cancellationToken = default)
         {
-            var result = await _employeeService.DeleteAsync(employeeDtos, cancellationToken);
+            var result = await _employeeService.DeleteAsync(Id, cancellationToken);
             return Ok(result);
         }
     }
