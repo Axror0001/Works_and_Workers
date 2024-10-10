@@ -8,8 +8,8 @@ namespace Jobs.Models
     {
         [Required]
         public int Id { get; set; }
-        public int LevelId {  get; set; }
-        public int CompanyId {  get; set; }
+        public int? LevelId {  get; set; }
+        public int? CompanyId {  get; set; }
         public string FirstName {  get; set; }
         public string LastName { get; set; }
         public string Age { get; set; }

@@ -68,8 +68,8 @@ namespace Jobs.Service
                     var levelModel = LevelsDtos.ModelToDtos();
                     levelModel.Code = LevelsDtos.Code.Trim();
                     levelModel.Levels = LevelsDtos.Levels.Trim();
-                    levelModel.EmployeeId = result.EmployeeId;
                     levelModel.IsDeleted = result.IsDeleted = default;
+                    await _levelRepository.CreateLevels(levelModel, cancellationToken);
                     return LevelsDtos;
                 }
                 else
@@ -92,10 +92,10 @@ namespace Jobs.Service
                 {
                     var level = LevelsDtos.ModelToDtos();
                     level.Levels = LevelsDtos.Levels.Trim();
-                    level.EmployeeId = LevelsDtos.EmployeeId;
                     level.IsDeleted = LevelsDtos.IsDeleted;
                     level.Code = LevelsDtos.Code.Trim();
                     level.IsDeleted = LevelsDtos.IsDeleted = default;
+                    await _levelRepository.UpdateLevels(level, cancellationToken);
                     return LevelsDtos;
                 }
                 else

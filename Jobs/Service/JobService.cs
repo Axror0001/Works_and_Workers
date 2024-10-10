@@ -102,7 +102,7 @@ namespace Jobs.Service
                     result.Direction = JobsDtos.Direction.Trim();
                     result.CompanyName = JobsDtos.CompanyName.Trim();
                     result.IsDeleted = JobsDtos.IsDeleted;
-                    result.EmployeeId = JobsDtos.EmployeeId;
+                    await _jobRepository.UpdateJobs(result, cancellationToken);
                     return JobsDtos;
                 }
                 else
