@@ -7,6 +7,7 @@ namespace Jobs.Models
     public class Level
     {
         [Required]
+        [Key]
         public int Id {  get; set; }
         public string Code {  get; set; }
         public string? Levels {  get; set; }

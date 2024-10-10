@@ -7,6 +7,7 @@ namespace Jobs.Models
     public class Job
     {
         [Required]
+        [Key]
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public string? JobName {  get; set; }

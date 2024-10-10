@@ -7,6 +7,7 @@ namespace Jobs.Models
     public class Employee
     {
         [Required]
+        [Key]
         public int Id { get; set; }
         public int? LevelId {  get; set; }
         public int? CompanyId {  get; set; }
