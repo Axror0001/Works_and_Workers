@@ -79,25 +79,14 @@
             throw new Exception("Sorry Don`t Save Employee");
         }
     }
-    public async Task GetAllLevel()
-    {
-        try
-        {
-            levelList = await _levelServiceUI.GetAllLevel();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-            throw ex;
-        }
-    }
-    public async Task GetAllCompany()
+    protected override async Task OnInitializedAsync()
     {
         try
         {
             jobList = await _jobServiceUI.GetAllJob();
+            levelList = await _levelServiceUI.GetAllLevel();
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
             Console.WriteLine(ex);
             throw ex;

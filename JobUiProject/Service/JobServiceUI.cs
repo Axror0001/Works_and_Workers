@@ -12,9 +12,11 @@ namespace JobsUI.Service
         }
         public async Task<IEnumerable<JobsDtos>> GetAllJob(CancellationToken cancellationToken = default)
         {
-            var request = await _httpClient.GetAsync("https://localhost:7109/Job/GetAllJob/", cancellationToken);
+            /*var request = await _httpClient.GetAsync("Job/GetAllJob", cancellationToken);
             var responce = await request.Content.ReadAsStringAsync(cancellationToken);
             var result = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<JobsDtos>>(responce);
+            return result;*/
+            var result = await _httpClient.GetFromJsonAsync<IEnumerable<JobsDtos>>("Job/GetAllJob", cancellationToken);
             return result;
         }
 
