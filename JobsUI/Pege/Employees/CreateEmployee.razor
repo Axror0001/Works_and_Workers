@@ -1,48 +1,106 @@
-﻿@using JobsUI.Service;
-@* <EditForm Model="@PositionDTO" OnValidSubmit="async() => { OnSave();}" OnInvalidSubmit="ShowError">
-    <Validations @ref="_validations" Model="PositionDTO" Mode="ValidationMode.Auto">
-        <Validation Validator="IsValid">
-            <div>
-                <Field ColumnSize="ColumnSize.Is6.OnDesktop">
-                    <FieldLabel>@localizer.GetLocalizedValue("code",$"{CultureInfo.CurrentCulture}")<Text TextColor="TextColor.Danger">*</Text></FieldLabel>
-                    <TextEdit MaskType="MaskType.RegEx" EditMask="^.GetLocalizedValue(0-9A-Za-z-]*$" MaxLength="10" @bind-Text="@PositionDTO.Code">
-                        <Feedback>
-                            <ValidationError>@localizer.GetLocalizedValue($"{errorMessage}",$"{CultureInfo.CurrentCulture}")</ValidationError>
-                        </Feedback>
-                    </TextEdit>
-                </Field>
-            </div>
-        </Validation>
-    </Validations>
-    <br />
-    <FluentValidationValidator DisableAssemblyScanning="@true" @ref=Validator />
-    <div class="form-group">
-        <FTranslation @ref=translation IsOnDrawer=true Disabled=false Translations="@PositionDTO.Translations"></FTranslation>
-    </div>
-    <br />
-    <Field Flex="Flex.JustifyContent.End">
-        <Div class="pb-2 d-flex float-right" style="margin-top: 30px">
-            <Button Class="w-100 me-2" Color="Color.Secondary" Outline Clicked="() => Refresh()">
-                @localizer.GetLocalizedValue("cancel",$"{CultureInfo.CurrentCulture}")
-            </Button>
-            <Button Class="me-0" Disabled=_disabledSaveBtn Type="ButtonType.Submit" Color="Color.Primary">
-                @localizer.GetLocalizedValue("create",$"{CultureInfo.CurrentCulture}")
-            </Button>
-        </Div>
+﻿@page "/createEmployee"
+@using Blazorise.Components
+@using JobsUI.Dtos
+@using Blazorise
+@using JobsUI.Service
+@inject EmployeeServiceUI _employeeServiceUI;
+@inject LevelServiceUI _levelServiceUI;
+@inject JobServiceUI _jobServiceUI;
+@inject NavigationManager _navigationManager
+
+<Div>
+    <Field>
+        <Label>FirstName</Label>
+        <TextEdit @bind-Value="EmployeeDtos.FirstName"/>
     </Field>
-</EditForm> *@
+    <Field>
+        <Label>LastName</Label>
+        <TextEdit @bind-Value="EmployeeDtos.LastName" />
+    </Field>
+    <Field>
+        <Label>Age</Label>
+        <TextEdit @bind-Value="EmployeeDtos.Age" />
+    </Field>
+    <Field>
+        <Label>AddRess</Label>
+        <TextEdit @bind-Value="EmployeeDtos.Address" />
+    </Field>
+    <Field>
+        <Label>PhoneNumber</Label>
+        <TextEdit @bind-Value="EmployeeDtos.PhoneNumber" />
+    </Field>
+    <Autocomplete TItem="LevelDtos"
+                  TValue="string" 
+                  Data="levelList"
+                  TextField="@(( item ) => item.Levels)"
+                  ValueField="@(( item ) => item.Code)"
+                  @bind-SelectedValue="@selectedSearchLevel"
+                  @bind-SelectedText="selectedLevelText"
+                  Placeholder="Search Level ..."
+                  Filter="AutocompleteFilter.StartsWith"
+                  FreeTyping
+                  CustomFilter="@(( item, searchValue ) => item.Levels.IndexOf( searchValue, 0, StringComparison.CurrentCultureIgnoreCase ) >= 0 )">
+        <NotFoundContent> Sorry... @context was not found! :( </NotFoundContent>
+    </Autocomplete>
+    <Autocomplete TItem="JobsDtos"
+                  TValue="string"
+                  Data="jobList"
+                  TextField="@(( item ) => item.CompanyName)"
+                  ValueField="@(( item ) => item.Direction)"
+                  @bind-SelectedValue="@selectedSearchJob"
+                  @bind-SelectedText="selectedJobText"
+                  Placeholder="Search Jobs ..."
+                  Filter="AutocompleteFilter.StartsWith"
+                  FreeTyping
+                  CustomFilter="@(( item, searchValue ) => item.CompanyName.IndexOf( searchValue, 0, StringComparison.CurrentCultureIgnoreCase ) >= 0 )">
+        <NotFoundContent> Sorry... @context was not found! :( </NotFoundContent>
+    </Autocomplete>
+</Div>
+
 @code {
-    [Parameter]
-    public Func<Dtos.EmployeeDtos, Task> SaveAction{ get; set; }
-    // public async Task OnSave()
-    // {
-    //     try
-    //     {
-    //         var result = await _
-    //     }
-    //     catch(Exception ex)
-    //     {
-    //         throw new Exception("Sorry Don`t Save Employee")
-    //     }
-    // }
+    private EmployeeDtos EmployeeDtos { get; set; }
+    private IEnumerable<LevelDtos> levelList { get; set; }
+    private IEnumerable<JobsDtos> jobList { get; set; }
+    private string selectedSearchLevel { get; set; }
+    private string selectedLevelText { get; set; }
+    private string selectedSearchJob { get; set; }
+    private string selectedJobText { get; set; }
+    public async Task OnSave()
+    {
+        try
+        {
+            if(EmployeeDtos is not null)
+            {
+                var result = await _employeeServiceUI.CreateEmployee(EmployeeDtos);   
+            }   
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Sorry Don`t Save Employee");
+        }
+    }
+    public async Task GetAllLevel()
+    {
+        try
+        {
+            levelList = await _levelServiceUI.GetAllLevel();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw ex;
+        }
+    }
+    public async Task GetAllCompany()
+    {
+        try
+        {
+            jobList = await _jobServiceUI.GetAllJob();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw ex;
+        }
+    }
 }
